@@ -2,7 +2,7 @@
 title: 'Getting started with Typescript Generics'
 date: '2024-10-13'
 lastmod: '2024-10-13'
-tags: ['react-js', 'typescript', 'generics']
+tags: ['react-js', 'nodejs', 'typescript', 'generics']
 draft: false
 summary: 'Detailed overview about typescript generics and how to use to build easy abstractions'
 images: []
@@ -10,23 +10,190 @@ images: []
 
 ## Introduction
 
-Let's deep dive into word of typescript generics and how we can use this to deal with crazy word of dynamics data type in frontend, here is the overview of things we'r gonna learn in this
+Let's deep dive into word of typescript generics and how we can use this to deal with crazy word of dynamics data type in frontend and backend,
+Generic are `type` parameters we pass in `function` when we don't exactly know what kinda of data function is taking or returing, we will try to
+explore different use case of generics in `React` and `NodeJS` code , learn with practical example how we can use this very awsome tool to make more
+`reusable component` and 'awsome abstractions'
 
 <TOCInline toc={props.toc} exclude="Introduction" />
 
 ## What is typescript generics, why you should know generics ?
 
+Are you currently frustrated with using `any` or `unknown` inside your codebase, when you don't know exactly what kind of data component gonna consume ?
+
 ## Basic examples
 
+Let's assume you have a function define that gonna call the endpoint and return you the data from backen/d,
+
+```ts:fetchdata.ts
+import axios, { AxiosResponse } from 'axios';
+
+interface ApiResponse {
+  status: string;
+  data: any;
+}
+
+const fetchData = async (url: string, config?: object): Promise<ApiResponse> => {
+  try {
+    const response: AxiosResponse = await axios.get(url, config);
+    return {
+      status: 'success',
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      data: error.response ? error.response.data : 'Something went wrong',
+    };
+  }
+};
+```
+
+## Taking generic arguments
+
+In Typescript function we can take generic arguments as parameters
+for example
+
+### in case of arrow function
+
+```ts:arrow.ts
+
+const func = <T>(firstArg: T) => {
+  return first_arg;
+};
+
+```
+
+Here in simple example we are defining an arrow function with a generic parameters,we define generic parameters inside `<>` we can name it like a normal variable, generaly we assign a capital letter or word as a name.
+
+```ts:arrow.ts
+
+type Empoyee = {
+  firstName: string;
+  lastName: string
+}
+
+const empl: Empoyee = {
+  firstName: 'sagar',
+  lastName: 'rajak'
+}
+
+const newEmployee = fun<Empoyee>(empl);
+
+```
+
+we can also deifne multiple generic arguments in function
+
+```ts:multiple.ts
+function utilyFunction<T, R>(firstValue: T, secondValue: R) {}
+
+```
+
+Here we are taking two generic arguments with type `T` and `R`
+
+### Lets take a real word example of json parser function when we dont know exactly what will be the type of data after parsing.
+
+```ts:jsonParser.ts
+function parseJson<T>(str: string): T | undefined {
+  try {
+    return JSON.parse(str);
+  } catch (err) {
+    console.error("Unable to parse string");
+    return undefined;
+  }
+}
+
+type Employee = {
+  first_name: string,
+  is_active: boolean
+};
+
+const obj: Employee = {
+  first_name: 'first',
+  is_active: true
+}
+
+const stringifyJson = parseJson<Employee>(JSON.stringify(obj));
+
+```
+
+here if you can see type of employee
+
+<figure>
+  {' '}
+  <img
+    src="/static/images/generics/tyepdefination.png"
+    alt="Type of parsed json"
+    width="500"
+    height="300"
+  />
+  <figcaption> Caption for your image.</figcaption>
+</figure>
+
+### Lets take a example of generic in typescript class
+
+we have used alot of repository classes in orm's let take an example of generic orm interface
+(Don't get confused with `Generic interface` i will explain this)
+
+```ts:respository.ts
+interface Employee {
+  firstName: string;
+  lastName: string;
+  id: string;
+  email: string;
+}
+
+interface Reposiotry<T> {
+  findAll(): T[];
+  findById(id: string): T | undefined;
+  create(entity: T, id: string): T;
+  delete(id: string): boolean;
+}
+
+class BaseReposiotry<EntityDef> implements Repository<EntityDef> {
+  delete(id: string): boolean {
+      throw new Error("Method not implemented.");
+  }
+
+  private store = new Map<string, T>()
+
+  findAll(): T[] {
+    return [...this.store.values()]
+  }
+
+  findById(id: string): T | undefined {
+    throw this.store.get(id)
+  }
+
+  create(entity: T, id: string): T {
+    this.store.set(id, entity);
+    return entity;
+  }
+}
+
+const employeeReposiotry = new BaseReposiotry<Employee>()
+```
+
+In this example we have made a simple typescript generic interface for repository method's and we have passed `T` as a generic arguments,
+now in second class We defined a `base` class were we implemented all repository method, here we are taking `EntityDef` as generic argument and passing
+this in the interface defination as a parameter, `Repository<EntityDef>`.
+Here if you try to create employee object you will get all the autocomplete for `Employee` because
+typescript knows you are creating object for `Employee` interface
+
+<figure>
+  <img src="/static/images/create_employee.gif" alt="gif" width="300" />
+  <figcaption>Here you can see the autocomplete.</figcaption>
+</figure>
+
 ## What is 'extends' Keyword
+
+let dug deep more, suppose we want that every entity should have an id property and it's type must be number
 
 ## What is 'Keyof' Keyword
 
 ## What is 'infer' Keyword
 
 ## Default type parameters
-
-## Taking multiple generic's arguments
 
 ## Real word Example's
 
