@@ -1,1 +1,10 @@
-{}
+{
+  "react-js": 1,
+  "nodejs": 1,
+  "typescript": 1,
+  "generics": 1,
+  "next-js": 1,
+  "tailwind": 1,
+  "guide": 1,
+  "feature": 1
+}
