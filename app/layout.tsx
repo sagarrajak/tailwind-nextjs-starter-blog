@@ -12,6 +12,8 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 
+export const runtime = 'edge'
+
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
   display: 'swap',

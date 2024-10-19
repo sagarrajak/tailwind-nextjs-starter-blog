@@ -9,7 +9,8 @@
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "cloudflare": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
     "@headlessui/react": "1.7.19",
@@ -46,6 +47,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.5",
     "@svgr/webpack": "^8.0.1",
     "@types/mdx": "^2.0.12",
     "@types/react": "^18.2.73",
