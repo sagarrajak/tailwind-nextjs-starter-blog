@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from 'next-themes'
 import siteMetadata from '@/data/siteMetadata'
+export const runtime = 'edge'
 
 export function ThemeProviders({ children }: { children: React.ReactNode }) {
   return (

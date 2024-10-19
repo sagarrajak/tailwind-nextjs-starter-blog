@@ -1,6 +1,8 @@
 import 'css/prism.css'
 import 'katex/dist/katex.css'
 
+export const runtime = 'edge'
+
 import PageTitle from '@/components/PageTitle'
 import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
